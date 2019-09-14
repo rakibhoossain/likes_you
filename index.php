@@ -15,6 +15,13 @@
 
 
 <style type="text/css">
+
+  .photo-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
   .photo-list>a{
     display: inline-block;
     position: relative;
@@ -25,7 +32,8 @@
     top: 0;
     left: 0;
     z-index: 999;
-    background: red;
+    background: rgba(0,0,0,.075);
+    color: #dc3545;
     border-radius: 50%;
     width: 30px;
     height: 30px;
@@ -33,10 +41,7 @@
     justify-content: center;
     align-items: center;
 }
-
 </style>
-
-
 
 </head>
 <body>
@@ -59,7 +64,7 @@
     	while($row = $result->fetch_assoc()) {
         $img = "http://graph.facebook.com/".$row['id']."/picture?type=large";
 
-            echo '<a href="https://www.facebook.com/'.$row['id'].'" target="_blank" class="image_link" val="'.$row['id'].'"><img alt="'.$row['name'].'" title="'.$row['name'].'" src="'.$img.'"><span class="count">'.$row['count'].'</span></a>';
+            echo '<a href="https://www.facebook.com/'.$row['id'].'" target="_blank" class="image_link" val="'.$row['id'].'"><img alt="'.$row['name'].'" title="'.$row['name'].'" src="'.$img.'"><span class="count"><strong>'.$row['count'].'</strong></span></a>';
     	}
 	} else {
     	echo 'No data found';
