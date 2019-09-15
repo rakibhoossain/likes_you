@@ -55,7 +55,9 @@
 
 <?php
 	include "init/connection.php";
-	$sql = "SELECT * FROM fb_user";
+	// $sql = "SELECT * FROM fb_user";
+
+  $sql = "SELECT DISTINCT(id), name, COUNT(update_date) As count FROM fb_user_all GROUP BY id, name";
         
 	$result = $conn->query($sql);
 	if ($result->num_rows > 0) {

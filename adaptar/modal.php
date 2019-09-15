@@ -5,7 +5,10 @@ if (isset($_POST['id'])) {
 
 	$id = $_POST['id'];
 
-	$sql = "SELECT * FROM fb_user WHERE id='$id'";
+	// $sql = "SELECT * FROM fb_user WHERE id='$id'";
+
+	$sql = "SELECT DISTINCT(id), name, COUNT(update_date) As count FROM fb_user_all WHERE id='$id' GROUP BY id, name";
+
 	$result = $conn->query($sql);
 
 	if ($result->num_rows > 0) {
@@ -34,13 +37,14 @@ if (isset($_POST['id'])) {
 
 //Get dates
 function get_dates($id, $conn){
-	$sql = "SELECT * FROM fb_user_all WHERE id='$id'";
+	$sql = "SELECT update_date FROM fb_user_all WHERE id='$id'";
 	$result = $conn->query($sql);
 
 	if ($result->num_rows > 0) {
 		$like = '<ol>';
 		while($row = $result->fetch_assoc()) {
-			$like .= '<li>Date: '.$row['update_date'].'</li>';
+			$newDateTime = date('d-M-Y h:i A', strtotime($row['update_date']));
+			$like .= '<li>Date: '.$newDateTime.'</li>';
 		}
 		$like .= '</ol>';
 		echo $like;

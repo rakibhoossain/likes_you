@@ -45,6 +45,10 @@
    <div class="form-group row">
     <div class="col-sm-10">
       <div class="form-inline">
+<div class="form-group mx-sm-3 mb-2 mt-2">
+    <select id="dateDdropdow" width="200">
+    </select>
+</div>        
         <div class="form-group mx-sm-3 mb-2 mt-2">
           <input type="text" name="date" id="json_mncc_date"  width="276">  
         </div>
@@ -188,11 +192,39 @@ document.getElementById("json_mncc_id").addEventListener('click',function ()
   validData(li);
 }); 
 
-$('#json_mncc_date').datepicker({
-  uiLibrary: 'bootstrap4',
-  format: 'yyyy-mm-dd'
+
+document.getElementById("dateDdropdow").addEventListener('change',function (e)
+{
+  document.getElementById("json_mncc_date").value = $(this).val();
+}); 
+
+$('#json_mncc_date').datetimepicker({
+  // uiLibrary: 'bootstrap4',
+  format: 'yyyy-mm-dd HH:MM:ss',
+  footer: true,
+  modal: true
 });
 
+
+//Save to db
+function get_dates(){
+  $.ajax({
+    url: "adaptar/db.php",
+    type: "POST",
+    data: {
+     date: '00-00-00'
+   },
+   success: function(response){
+    document.getElementById("dateDdropdow").innerHTML = response;
+    document.getElementById("json_mncc_date").value = $('#dateDdropdow').val();
+  }        
+  });
+}
+
+get_dates();
+
+
+// $('#dateDdropdow').dropdown();
 </script>
 
 </body>
