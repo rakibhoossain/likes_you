@@ -45,10 +45,10 @@
    <div class="form-group row">
     <div class="col-sm-10">
       <div class="form-inline">
-<div class="form-group mx-sm-3 mb-2 mt-2">
-    <select id="dateDdropdow" width="200">
-    </select>
-</div>        
+        <div class="form-group mx-sm-3 mb-2 mt-2">
+            <select id="dateDdropdow" class="form-control" width="200">
+            </select>
+        </div>        
         <div class="form-group mx-sm-3 mb-2 mt-2">
           <input type="text" name="date" id="json_mncc_date"  width="276">  
         </div>
