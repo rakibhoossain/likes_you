@@ -6,28 +6,43 @@ if( isset($_SESSION['userid']) ){
   header("Location: likers.php");
   exit();
 }
-if(isset($_POST["json_mncc_login_id"])){
+if( isset($_POST["json_mncc_login_username"]) && isset($_POST["json_mncc_login_pass"]) ){
 
-  $url = "http://graph.facebook.com/".$_POST["json_mncc_login_id"];
-  $curlSession = curl_init();
-  curl_setopt($curlSession, CURLOPT_URL, $url);
-  curl_setopt($curlSession, CURLOPT_BINARYTRANSFER, true);
-  curl_setopt($curlSession, CURLOPT_RETURNTRANSFER, true);
+  require_once('init/connection.php');
+  $username = $_POST["json_mncc_login_username"];
+  $password = $_POST["json_mncc_login_pass"];
+  $sql = "SELECT id, username, name FROM user WHERE username='$username' AND password ='$password'";
 
-  $jsonData = json_decode(curl_exec($curlSession));
-  curl_close($curlSession);
+  $result = $conn->query($sql);
 
-  if($jsonData->error->code == 104){
-  $_SESSION['userid'] = $_POST["json_mncc_login_id"];
-  header("Location: likers.php");
-  }
+    if ($result->num_rows == 1){
+      while($row = $result->fetch_assoc()) {
+      $id = $row['id'];
+
+      $url = "http://graph.facebook.com/".$id;
+      $curlSession = curl_init();
+      curl_setopt($curlSession, CURLOPT_URL, $url);
+      curl_setopt($curlSession, CURLOPT_BINARYTRANSFER, true);
+      curl_setopt($curlSession, CURLOPT_RETURNTRANSFER, true);
+
+      $jsonData = json_decode(curl_exec($curlSession));
+      curl_close($curlSession);
+
+      if($jsonData->error->code == 104){
+      $_SESSION['userid'] = $id;
+      $_SESSION['name'] = $row['name'];
+
+      header("Location: likers.php");
+      }
+      }
+    }
 }
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Who likes your post in facebook</title>
+  <title>Login to see who likes you!</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
@@ -39,24 +54,24 @@ if(isset($_POST["json_mncc_login_id"])){
 </head>
 <body>
 
-
-
-
 <!-- Modal -->
 <div class="modal fade" id="idInputModal" tabindex="-1" role="dialog" aria-labelledby="profileModalTitle" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="modal-header"><h5 class="modal-title" id="idInputModalTitle">Profile ID:</h5></div>
+      <div class="modal-header"><h5 class="modal-title" id="idInputModalTitle">Login</h5></div>
       <div class="modal-body">
         <div class="col-12">
           <form method="post">
            <div class="form-group row">
             <div class="col-sm-10">
-              <div class="form-inline">       
-                <div class="form-group mx-sm-3 mb-2 mt-2">
-                  <input type="text" name="json_mncc_login_id" id="json_mncc_login_id" class="form-control"  width="276">  
-                </div>
-                <input type="submit" name="process" id="json_mncc_login_btn" class="btn btn-primary mt-2 mb-2" value="Next">   
+              <div class="form-group mx-sm-3 mb-2 mt-2">
+                <input type="text" name="json_mncc_login_username" placeholder="Username" id="json_mncc_login_username" class="form-control"  width="276">  
+              </div>
+              <div class="form-group mx-sm-3 mb-2 mt-2">
+                <input type="password" name="json_mncc_login_pass" placeholder="Password" id="json_mncc_login_pass" class="form-control"  width="276">  
+              </div>
+              <div class="form-group mx-sm-3 mb-2 mt-2">
+                 <input type="submit" name="process" id="json_mncc_login_btn" class="btn btn-primary mt-2 mb-2" value="Next">  
               </div>
             </div>
           </div>

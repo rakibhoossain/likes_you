@@ -20,7 +20,7 @@
 
 //Get liker info
 function get_user_info($ref, $conn ){
-	$sql = "SELECT DISTINCT(id), COUNT(update_date) As users FROM fb_user_all WHERE ref='$ref' GROUP BY id";
+	$sql = "SELECT DISTINCT(id), name, COUNT(update_date) As users FROM fb_user_all WHERE ref='$ref' GROUP BY id";
 	$result = $conn->query($sql);
 
 	$users = $result->num_rows;
@@ -30,7 +30,8 @@ function get_user_info($ref, $conn ){
 		while($row = $result->fetch_assoc()) {
 			$id = $row['id'];
 			$likes = $row['users'];
-			$data[$id]=['likes' => $likes, 'dates' => get_user_likes_info($id, $ref, $conn )];
+			$name = $row['name'];
+			$data[$id]=['name'=> $name,'likes' => $likes, 'dates' => get_user_likes_info($id, $ref, $conn )];
 		}
 	}
 	return ['likers'=> $users, 'data' => $data];

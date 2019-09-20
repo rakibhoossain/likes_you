@@ -3,7 +3,7 @@ if(session_id() == '' || !isset($_SESSION)) {
     session_start();
 }
 if(!isset($_SESSION["userid"])){
-header("Location: index.php");
+header("Location: ../index.php");
 exit(); }
 ?>
 
@@ -68,7 +68,7 @@ exit(); }
 ?>
 <div class="jumbotron text-center">
   <h1>Who likes you! Old account (<?php echo $count;?>)</h1>
-  <h2><?php echo $_SESSION['userid']; ?></h2>
+  <h2><?php echo $_SESSION['name']; ?></h2>
 </div>
   
 <div class="container-fluid photo-list">
@@ -91,7 +91,7 @@ $count = $result->num_rows;
 
 <div class="jumbotron text-center">
   <h1>Who likes you! Both account (<?php echo $count;?>)</h1>
-  <h2><?php echo $_SESSION['userid']; ?></h2>
+  <h2><?php echo $_SESSION['name']; ?></h2>
 </div>
 <div class="container-fluid photo-list">
 <?php
@@ -116,7 +116,7 @@ $count = $result->num_rows;
 
 <div class="jumbotron text-center">
   <h1>Who likes you! Only old (<?php echo $count;?>)</h1>
-  <h2><?php echo $_SESSION['userid']; ?></h2>
+  <h2><?php echo $_SESSION['name']; ?></h2>
 </div>
 <div class="container-fluid photo-list">
 <?php

@@ -90,10 +90,19 @@ input[type="search"] {
 
 </head>
 <body>
-<?php include "nav.php";?>
+<?php 
+  include "nav.php";
+  include "init/connection.php";
+  $ref = $_SESSION['userid'];
+
+  $post = "SELECT DISTINCT(update_date) FROM fb_user_all WHERE ref='$ref' GROUP BY update_date";
+  $posts = $conn->query($post);
+  $total_post = $posts->num_rows;
+?>
 <div class="jumbotron text-center">
   <h1>Who likes you!</h1>
-  <h2><?php echo $_SESSION['userid']; ?></h2>
+  <h2><?php echo $_SESSION['name']; ?></h2>
+  <h5>Total post: <strong><?php echo $total_post;?></strong></h5>
 
   <div class="row justify-content-md-center">
     <div class="col-lg-3 col-md-6 col-sm-12 mt-20">
@@ -110,9 +119,6 @@ input[type="search"] {
 
 
 <?php
-	include "init/connection.php";
-  $ref = $_SESSION['userid'];
-	// $sql = "SELECT * FROM fb_user";
   $sql = "SELECT DISTINCT(id), name, COUNT(update_date) As count FROM fb_user_all WHERE ref='$ref' GROUP BY id, name ORDER By count DESC";
         
 	$result = $conn->query($sql);
