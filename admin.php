@@ -1,3 +1,11 @@
+<?php
+if(session_id() == '' || !isset($_SESSION)) {
+    session_start();
+}
+if(!isset($_SESSION["userid"])){
+header("Location: index.php");
+exit(); }
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,6 +42,7 @@
   <div class="container-fluid">
    <div class="jumbotron">
     <h1 class="display-4">Facebook Name,ID fiender from like list </h1>
+    <h2><?php echo $_SESSION['userid']; ?></h2>
   </div>
 </div>
 

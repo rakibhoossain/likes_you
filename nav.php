@@ -15,6 +15,9 @@
       <li class="nav-item">
         <a class="nav-link" href="/compare">Compare</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="logout.php">Log out</a>
+      </li>
     </ul>
   </div>
 </nav>
