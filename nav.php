@@ -7,13 +7,7 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href="/">New FB ID</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/old">Old FB ID</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/compare">Compare</a>
+        <a class="nav-link" href="compare">Compare</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="logout.php">Log out</a>

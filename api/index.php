@@ -12,7 +12,7 @@
 			$outp[$ref] = get_user_info($ref, $conn );
 		}
 	}
-	echo json_encode(['total'=> $total,'likers'=> $outp]);
+	echo json_encode(['users'=> $total,'likers'=> $outp]);
 	$conn->close();
 ?>
 
@@ -33,7 +33,7 @@ function get_user_info($ref, $conn ){
 			$data[$id]=['likes' => $likes, 'dates' => get_user_likes_info($id, $ref, $conn )];
 		}
 	}
-	return ['data' => $data];
+	return ['likers'=> $users, 'data' => $data];
 }
 
 //Get user likes dates

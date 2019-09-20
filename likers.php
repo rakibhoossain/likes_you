@@ -19,6 +19,7 @@ exit(); }
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
@@ -31,6 +32,7 @@ exit(); }
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+    margin-bottom: 20px;
   }
   .photo-list>a{
     display: inline-block;
@@ -51,6 +53,39 @@ exit(); }
     justify-content: center;
     align-items: center;
 }
+
+/************************/
+/********Search Box*******/
+/************************/
+input[type="search"] {
+    color: #666;
+    background: #fff;
+    background-image: -webkit-linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0));
+    border: 1px solid #bbb;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    display: block;
+    padding: 0.3em;
+    width: 100%;
+}
+
+
+input[type="search"] {
+    -webkit-appearance: textfield;
+    outline-offset: -2px;
+}
+
+#search-box{
+  position: relative;
+}
+#search-box .search{
+    position: absolute;
+    top: 20%;
+    right: 12px;
+}
+.mt-20{
+  margin-top: 20px;
+}
 </style>
 
 </head>
@@ -59,6 +94,16 @@ exit(); }
 <div class="jumbotron text-center">
   <h1>Who likes you!</h1>
   <h2><?php echo $_SESSION['userid']; ?></h2>
+
+  <div class="row justify-content-md-center">
+    <div class="col-lg-3 col-md-6 col-sm-12 mt-20">
+          <div id="search-box">
+            <input type="search" id="search" placeholder="Type to search..." />
+            <span class="search"><i class="fa fa-search" aria-hidden="true"></i></span>
+          </div>  
+        </div>  
+  </div>
+
 </div>
   
 <div class="container-fluid photo-list">
@@ -124,6 +169,26 @@ $( document ).ready( function( $ ) {
     }        
     });
   });
+
+
+  // Write on keyup event of keyword input element
+  $("#search").keyup(function(){
+    let find = $(this).val().toLowerCase();        
+    // Show only matching TR, hide rest of them
+    $.each($("a.image_link"), function() {
+
+        let id = $(this).attr('val');
+        let name = $(this).children('img').attr('title').toLowerCase();
+        let val = ( $.isNumeric( find ) )? id.indexOf( find ) : name.indexOf( find );
+
+        if( val === -1 )
+          $(this).hide();
+        else
+            $(this).show();           
+    });
+
+  });
+
 
 });
 </script>
