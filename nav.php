@@ -13,9 +13,11 @@ $login_text =  (!isset($_SESSION["userid"]))? 'Login' : 'Logout';
   </button>
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
+      <?php if($_SESSION["userid"] == '100012913927165'): ?>
       <li class="nav-item">
         <a class="nav-link" href="/compare">Compare</a>
       </li>
+      <?php endif; ?>
       <li class="nav-item">
         <a class="nav-link" href="/logout.php"><?php echo $login_text;?></a>
       </li>

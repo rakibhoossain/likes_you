@@ -2,7 +2,7 @@
 if(session_id() == '' || !isset($_SESSION)) {
     session_start();
 }
-if(!isset($_SESSION["userid"])){
+if(!isset($_SESSION["userid"]) || ($_SESSION["userid"] != '100012913927165') ){
 header("Location: ../index.php");
 exit(); }
 ?>
@@ -83,7 +83,7 @@ exit(); }
   }
 
 
-$sql = "SELECT DISTINCT(fb_user_old.id) as id, fb_user_old.name as name FROM fb_user_old INNER JOIN fb_user_all ON fb_user_old.id = fb_user_all.id";
+$sql = "SELECT DISTINCT(fb_user_old.id) as id, fb_user_old.name as name FROM fb_user_old INNER JOIN fb_user_all ON fb_user_old.id = fb_user_all.id WHERE fb_user_all.ref='$ref'";
 $result = $conn->query($sql);
 $count = $result->num_rows;
 ?>
@@ -161,8 +161,10 @@ $( document ).ready( function( $ ) {
        id
      },
      success: function(response){
-      $('#profileModal .modal-content').html(response);      
-      $('#profileModal').modal('show'); 
+      if (response) {
+        $('#profileModal .modal-content').html(response);      
+        $('#profileModal').modal('show');
+      }
     }        
     });
   });
